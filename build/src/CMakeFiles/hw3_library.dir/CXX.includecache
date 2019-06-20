@@ -1,0 +1,20 @@
+#IncludeRegexLine: ^[ 	]*[#%][ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+/Users/alan/Desktop/CCNYSummerWork/Git-Public-HW3/src/hw3.cpp
+hw3.h
+/Users/alan/Desktop/CCNYSummerWork/Git-Public-HW3/src/hw3.h
+
+/Users/alan/Desktop/CCNYSummerWork/Git-Public-HW3/src/hw3.h
+iostream
+-
+cstdlib
+-
+cassert
+-
+

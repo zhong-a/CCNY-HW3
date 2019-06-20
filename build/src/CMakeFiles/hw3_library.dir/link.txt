@@ -1,0 +1,2 @@
+/Library/Developer/CommandLineTools/usr/bin/ar qc libhw3_library.a  CMakeFiles/hw3_library.dir/hw3.cpp.o
+/Library/Developer/CommandLineTools/usr/bin/ranlib libhw3_library.a
