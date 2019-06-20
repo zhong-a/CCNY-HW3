@@ -256,36 +256,103 @@ void print(Node* head) {
 }
 
 void swap(Node*& head, size_t pos) {
-    for (int i = 0 ; i < pos - 1; i++) {
-        assert(head->getLink() != NULL);
-        head = head->getLink();
+    if (head == NULL || head->getLink() == NULL) {//only one item
+        return;
     }
-    assert(head->getLink() != NULL);
+    if (pos == 0) {
+        Node* s = head->getLink();
+        Node* s_out = s->getLink();
+        s->setLink(head);
+        head->setLink(s_out);
+        head = s;
+    }
+    Node* prev = head;
     Node* s1 = head->getLink();
-    assert(s1->getLink() != NULL);
+    for (int i = 0; i < pos - 1; i++) {
+        if (s1->getLink() == NULL) {
+            return;
+        }
+        s1 = s1->getLink();
+        prev = prev->getLink();
+    }
     Node* s2 = s1->getLink();
-    s1->setLink(s2->getLink());
+    Node* s2_out = s2->getLink();
+    prev->setLink(s2);
     s2->setLink(s1);
-    head->setLink(s2);
+    s1->setLink(s2_out);
+}
+
+void swapHead(Node*& head, size_t pos) {
+    if (head == NULL || pos == 0) {
+        return;
+    }
+    if (pos == 1) {
+        Node* s = head->getLink();
+        Node* s_next = s->getLink();
+        s->setLink(head);
+        head->setLink(s_next);
+        head = s;
+        return;
+    }
+    Node* head_next = head->getLink();
+    Node* s = head->getLink();
+    Node* prev = head;
+    for (int i = 0; i < pos - 1; i ++) {
+        if (s->getLink() == NULL) {
+            return;
+        }
+        s = s->getLink();
+        prev = prev->getLink();
+    }
+    Node* s_next = s->getLink();
+    prev->setLink(head);
+    head->setLink(s_next);
+    s->setLink(head_next);
+    head = s;
+    
 }
 
 void swap(Node*& head, size_t posI, size_t posJ) {
+    if (head == NULL || head->getLink() == NULL) {// Empty or only one item
+        return;
+    }
     Node* prev_i = head;
     Node* prev_j = head;
-    for (int i = 0; i < posI; i++) {
-        prev_i = prev_i->getLink();
+    Node* p_i = head->getLink();
+    Node* p_j = head->getLink();
+    if (posI == 0) {
+        swapHead(head, posJ);
     }
-    for (int j = 0; j < posJ; j++) {
-        prev_j = prev_j->getLink();
+    else if (posJ == 0) {
+        swapHead(head, posI);
     }
-    Node* s1 = prev_i->getLink();
-    Node* s2 = prev_j->getLink();
-    Node* s1_out = s1->getLink();
-    Node* s2_out = s2->getLink();
-    s1->setLink(s2_out);
-    s2->setLink(s1_out);
-    prev_i->setLink(s2);
-    prev_j->setLink(s1);
+    else {
+        if (posJ = posI + 1) {
+            swap(head, posI);
+            return;
+        }
+        for (int i = 0; i < posI - 1; i++) {
+            if (p_i->getLink() == NULL) {
+                return;
+            }
+            p_i = p_i->getLink();
+            prev_i = prev_i->getLink();
+        }
+        for (int j = 0; j < posJ - 1; j++) {
+            if (p_j->getLink() == NULL) {
+                return;
+            }
+            p_j = p_j->getLink();
+            prev_j = prev_j->getLink();
+        }
+        Node* i_next = p_i->getLink();
+        Node* j_next = p_j->getLink();
+        prev_i->setLink(p_j);
+        p_j->setLink(i_next);
+        prev_j->setLink(p_i);
+        p_i->setLink(j_next);
+    }
 }
+            
 
 
