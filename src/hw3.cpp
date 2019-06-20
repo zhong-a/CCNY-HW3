@@ -101,7 +101,7 @@ bool isCycle(Node* head) {
 }
 
 bool isEmpty(Node* head) {
-    return (head->getLink() == NULL);
+    return (head == NULL);
 }
 
 bool isValid(Node* head, size_t pos) {
@@ -160,12 +160,20 @@ const Node* listSearch(const Node* head, const Node::nodeDatatype& target) {
 }
 
 void removeHead  (Node*& head) {
-    assert(head->getLink() != NULL);
+    if (head == NULL) {
+        return;
+    }
     head = head->getLink();
 }
 
 void removeTail  (Node*& head) {
-    assert(head->getLink() != NULL);
+    if (head == NULL) {
+        return;
+    }
+    if (head->getLink() == NULL) {
+        head = NULL;
+        return;
+    }
     Node* temp = head;
     while (temp->getLink()->getLink() != NULL) {
         temp = temp->getLink();
@@ -174,6 +182,10 @@ void removeTail  (Node*& head) {
 }
 
 void removeInd   (Node*& head, size_t pos) {
+    if (pos == 0) {
+        removeHead(head);
+        return;
+    }
     Node* temp = head;
     for (int i = 0 ; i < pos - 1; i++) {
         temp = temp->getLink();
@@ -190,7 +202,7 @@ void remove      (Node*  prev) {
     prev->setLink(temp);
 }
 
-void removeAll   (Node*& head) {head = new Node;}
+void removeAll   (Node*& head) {head = NULL;}
 
 void removeFromTo(Node*& head, size_t from, size_t to) {
     Node* temp = head;
