@@ -63,7 +63,7 @@ bool isCycle(Node* head) {
         head->setLink(temp);
         head = nex;
     }
-    
+    return false;
 }
 
 bool isEmpty(Node* head) {
@@ -185,19 +185,58 @@ void removeToTail(Node*& head, size_t from) {
     }
 }
 
-void reverse(Node*& head);
+void reverse(Node*& head) {
+    Node* temp = head;
+    Node* prev = NULL;
+    Node* nex = NULL;
+    while (temp != NULL) {
+        nex = temp->getLink();
+        temp->setLink(prev);
+        prev = temp;
+        temp = nex;
+    }
+    head = prev;
+}
 
 void print(Node* head) {
     Node* temp = head;
     while (temp != NULL) {
-        cout << temp.getData() << " ";
+        cout << temp->getData() << " ";
     }
-    cout << endl;'
+    cout << endl;
 }
 
 void swap(Node*& head, size_t pos) {
-    
+    for (int i = 0 ; i < pos - 1; i++) {
+        assert(head->getLink() != NULL);
+        head = head->getLink();
+    }
+    assert(head->getLink() != NULL);
+    Node* s1 = head->getLink();
+    assert(s1->getLink() != NULL);
+    Node* s2 = s1->getLink();
+    s1->setLink(s2->getLink());
+    s2->setLink(s1);
+    head->setLink(s2);
 }
-void swap(Node*& head, size_t posI, size_t posJ);
+
+void swap(Node*& head, size_t posI, size_t posJ) {
+    Node* prev_i = head;
+    Node* prev_j = head;
+    for (int i = 0; i < posI; i++) {
+        prev_i = prev_i->getLink();
+    }
+    for (int j = 0; j < posJ; j++) {
+        prev_j = prev_j->getLink();
+    }
+    Node* s1 = prev_i->getLink();
+    Node* s2 = prev_j->getLink();
+    Node* s1_out = s1->getLink();
+    Node* s2_out = s2->getLink();
+    s1->setLink(s2_out);
+    s2->setLink(s1_out);
+    prev_i->setLink(s2);
+    prev_j->setLink(s1);
+}
 
 
