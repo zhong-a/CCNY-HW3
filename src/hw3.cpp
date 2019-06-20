@@ -105,6 +105,9 @@ bool isEmpty(Node* head) {
 }
 
 bool isValid(Node* head, size_t pos) {
+    if (head == NULL) {
+        return false;
+    }
     const Node* temp = head;
     for (int i = 0; i < pos; i++) {
         if (temp == NULL) {
