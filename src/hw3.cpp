@@ -7,14 +7,21 @@ void insertHead(Node*& head, Node*& entry) {
 }
 
 void insertTail(Node*& head, Node*& entry) {
-    Node* temp = head;
-    while (temp->getLink() != NULL) {
-        temp = temp->getLink();
+    if (head == NULL) {
+        insertHead(head, entry);
+        return;
     }
-    temp->setLink(entry);
+    while (head->getLink() != NULL) {
+        head = head->getLink();
+    }
+    head->setLink(entry);
 }
 
 void insertInd(Node*& head, Node*& entry, size_t pos) {
+    if (head == NULL) {
+        insertHead(head, entry);
+        return;
+    }
     Node* temp = head;
     for (int i = 0; i < pos - 1; i++) {
         temp = temp->getLink();
@@ -30,22 +37,49 @@ void insert(Node*  prev, Node*  entry) {
     entry->setLink(temp);
 }
 
-void insertHead(Node*& head, const Node::nodeDatatype& entry) { head->setData(entry);}
+void insertHead(Node*& head, const Node::nodeDatatype& entry) {
+    if (head == NULL) {
+        head = new Node();
+        head->setData(entry);
+        return;
+    }
+    Node* temp;
+    temp->setData(head->getData());
+    temp->setLink(head->getLink());
+    head->setData(entry);
+    head->setLink(temp);
+}
 
 void insertTail(Node*& head, const Node::nodeDatatype& entry) {
+    if (head == NULL) {
+        head = new Node();
+        head->setData(entry);
+        return;
+    }
     Node* temp = head;
     while (temp->getLink() != NULL) {
         temp = temp->getLink();
     }
-    temp->setData(entry);
+    Node* new_tail = new Node();
+    new_tail->setData(entry);
+    temp->setLink(new_tail);
 }
 
 void insertInd (Node*& head, const Node::nodeDatatype& entry, size_t pos) {
+    if (head == NULL && pos == 0) {
+        head = new Node();
+        head->setData(entry);
+        return;
+    }
     Node* temp = head;
-    for (int i = 0; i < pos; i++) {
+    for (int i = 0; i < pos - 1; i++) {
         temp = temp->getLink();
     }
-    temp->setData(entry);
+    Node* temp_link = temp->getLink();
+    Node* new_node = new Node();
+    new_node->setData(entry);
+    temp->setLink(new_node);
+    new_node->setLink(temp_link);
 }
 
 void insert    (Node*  prev, const Node::nodeDatatype& entry) { prev->setData(entry); }
