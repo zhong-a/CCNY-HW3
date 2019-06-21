@@ -24,6 +24,9 @@ void insertInd(Node*& head, Node*& entry, size_t pos) {
     }
     Node* temp = head;
     for (int i = 0; i < pos - 1; i++) {
+        if (temp->getLink() == NULL) {
+            return;
+        }
         temp = temp->getLink();
     }
     Node* link_temp = temp->getLink();
@@ -32,6 +35,9 @@ void insertInd(Node*& head, Node*& entry, size_t pos) {
 }
 
 void insert(Node*  prev, Node*  entry) {
+    if (prev == NULL) {
+        return;
+    }
     Node* temp = prev->getLink();
     prev->setLink(entry);
     entry->setLink(temp);
@@ -43,7 +49,7 @@ void insertHead(Node*& head, const Node::nodeDatatype& entry) {
         head->setData(entry);
         return;
     }
-    Node* temp;
+    Node* temp = new Node();
     temp->setData(head->getData());
     temp->setLink(head->getLink());
     head->setData(entry);
@@ -73,6 +79,9 @@ void insertInd (Node*& head, const Node::nodeDatatype& entry, size_t pos) {
     }
     Node* temp = head;
     for (int i = 0; i < pos - 1; i++) {
+        if (temp->getLink() == NULL) {
+            return;
+        }
         temp = temp->getLink();
     }
     Node* temp_link = temp->getLink();
@@ -129,6 +138,9 @@ size_t length(Node* head) {
 }
 
 Node* listLocate      (Node* head, size_t position) {
+    if (head == NULL) {
+        return NULL;
+    }
     Node* temp = head;
     for (int i = 0; i < position; i++) {
         temp = temp->getLink();
@@ -137,6 +149,9 @@ Node* listLocate      (Node* head, size_t position) {
 }
 
 const Node* listLocate(const Node* head, size_t pos) {
+    if (head == NULL) {
+        return NULL;
+    }
     const Node* temp = head;
     for (int i = 0; i < pos; i++) {
         temp = temp->getLink();
@@ -145,6 +160,9 @@ const Node* listLocate(const Node* head, size_t pos) {
 }
 
 Node* listSearch      (Node* head, const Node::nodeDatatype& target) {
+    if (head == NULL) {
+        return NULL;
+    }
     for (Node* temp = head; temp != NULL; temp = temp->getLink()) {
         if (temp->getData() == target) {
             return temp;
@@ -154,6 +172,9 @@ Node* listSearch      (Node* head, const Node::nodeDatatype& target) {
 }
 
 const Node* listSearch(const Node* head, const Node::nodeDatatype& target) {
+    if (head == NULL) {
+        return NULL;
+    }
     for (const Node* temp = head; temp != NULL; temp = temp->getLink()) {
         if (temp->getData() == target) {
             return temp;
@@ -185,6 +206,9 @@ void removeTail  (Node*& head) {
 }
 
 void removeInd   (Node*& head, size_t pos) {
+    if (head == NULL) {
+        return;
+    }
     if (pos == 0) {
         removeHead(head);
         return;
@@ -199,6 +223,9 @@ void removeInd   (Node*& head, size_t pos) {
 }
 
 void remove      (Node*  prev) {
+    if (prev == NULL) {
+        return;
+    }
     assert(prev->getLink() != NULL);
     Node* temp = prev->getLink();
     temp = temp->getLink();
@@ -208,6 +235,9 @@ void remove      (Node*  prev) {
 void removeAll   (Node*& head) {head = NULL;}
 
 void removeFromTo(Node*& head, size_t from, size_t to) {
+    if (head == NULL) {
+        return;
+    }
     Node* temp = head;
     for (int i = 0; i < from - 1; i++) {
         assert(temp->getLink() != NULL);
@@ -219,12 +249,19 @@ void removeFromTo(Node*& head, size_t from, size_t to) {
 }
 
 void removeHeadTo(Node*& head, size_t to) {
+    if (head == NULL) {
+        return;
+    }
     for (int i = 0 ; i < to - 1; i++) {
         remove(head);
     }
     removeHead(head);
 }
+
 void removeToTail(Node*& head, size_t from) {
+    if (head == NULL) {
+        return;
+    }
     for (int i = 0; i < from - 1; i++) {
         assert(head->getLink() != NULL);
         head = head->getLink();
@@ -235,6 +272,9 @@ void removeToTail(Node*& head, size_t from) {
 }
 
 void reverse(Node*& head) {
+    if (head == NULL) {
+        return;
+    }
     Node* temp = head;
     Node* prev = NULL;
     Node* nex = NULL;
@@ -327,7 +367,7 @@ void swap(Node*& head, size_t posI, size_t posJ) {
         swapHead(head, posI);
     }
     else {
-        if (posJ = posI + 1) {
+        if (posJ == posI + 1) {
             swap(head, posI);
             return;
         }
