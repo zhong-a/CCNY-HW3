@@ -93,7 +93,7 @@ void insertInd (Node*& head, const Node::nodeDatatype& entry, size_t pos) {
 
 void insert    (Node*  prev, const Node::nodeDatatype& entry) { prev->setData(entry); }
 
-bool isCycle(Node* head) {
+/*bool isCycle(Node* head) {
     Node* temp = new Node();
     while (head != NULL) {
         if (head->getLink() == NULL) {
@@ -105,6 +105,22 @@ bool isCycle(Node* head) {
         Node* nex = head->getLink();
         head->setLink(temp);
         head = nex;
+    }
+    return false;
+}*/
+
+bool isCycle(Node* head) {
+    if (head == NULL) {
+        return false;
+    }
+    Node* slow = head;
+    Node* fast = head;
+    while (slow != NULL && fast != NULL && fast->getLink() != NULL) {
+        slow = slow->getLink();
+        fast = fast->getLink()->getLink();
+        if (slow == fast) {
+            return true;
+        }
     }
     return false;
 }
@@ -187,7 +203,9 @@ void removeHead  (Node*& head) {
     if (head == NULL) {
         return;
     }
+    Node* temp = head;
     head = head->getLink();
+    delete[] temp;
 }
 
 void removeTail  (Node*& head) {
@@ -202,6 +220,8 @@ void removeTail  (Node*& head) {
     while (temp->getLink()->getLink() != NULL) {
         temp = temp->getLink();
     }
+    Node* temp_next = temp->getLink();
+    delete temp_next;
     temp->setLink(NULL);
 }
 
